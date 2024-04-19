@@ -1,0 +1,33 @@
+language: python
+
+python:
+   - 3.5
+   
+branches:
+   only:
+       - master
+
+install:
+   - pip install coverage
+   - pip install coveralls
+   - pip install flake8
+   - pip install -r requirements.txt
+
+before_Script:
+   - "flake8 codebase"
+
+script:
+   - coverage run -m unittest discover -s fakereviewgenerator
+
+notifications:
+  email:
+    recipients:
+      - amnag@uw.edu
+      - mgautam@uw.edu
+      - toanlm@uw.edu
+    on_success: never # default: change
+    on_failure: always # default: always
+
+after_success:
+   - coverage report
+   - coveralls
